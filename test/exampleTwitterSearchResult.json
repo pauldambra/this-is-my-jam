@@ -1,0 +1,536 @@
+{
+  "statuses": [
+    {
+      "created_at": "Sat Mar 07 13:26:12 +0000 2020",
+      "id": 1236281999452786700,
+      "id_str": "1236281999452786690",
+      "text": "https://t.co/nYOreAbQcl\n\n#ThisIsMyJam",
+      "truncated": false,
+      "entities": [
+        "Object"
+      ],
+      "metadata": [
+        "Object"
+      ],
+      "source": "<a href=\"https://mobile.twitter.com\" rel=\"nofollow\">Twitter Web App</a>",
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": [
+        "Object"
+      ],
+      "geo": null,
+      "coordinates": null,
+      "place": null,
+      "contributors": null,
+      "is_quote_status": false,
+      "retweet_count": 0,
+      "favorite_count": 0,
+      "favorited": false,
+      "retweeted": false,
+      "possibly_sensitive": false,
+      "lang": "und"
+    },
+    {
+      "created_at": "Fri Mar 06 22:42:17 +0000 2020",
+      "id": 1236059554695319600,
+      "id_str": "1236059554695319553",
+      "text": "This is my Jam! Song of the week: \"CITY OF ANGELS\" by 24kGoldn is my new jam! https://t.co/LhHGEffvFz #sotw… https://t.co/vf4uCJQXGc",
+      "truncated": true,
+      "entities": [
+        "Object"
+      ],
+      "metadata": [
+        "Object"
+      ],
+      "source": "<a href=\"https://ifttt.com\" rel=\"nofollow\">IFTTT</a>",
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": [
+        "Object"
+      ],
+      "geo": null,
+      "coordinates": null,
+      "place": null,
+      "contributors": null,
+      "is_quote_status": false,
+      "retweet_count": 0,
+      "favorite_count": 0,
+      "favorited": false,
+      "retweeted": false,
+      "possibly_sensitive": false,
+      "lang": "en"
+    },
+    {
+      "created_at": "Fri Mar 06 21:42:42 +0000 2020",
+      "id": 1236044558909296600,
+      "id_str": "1236044558909296640",
+      "text": "This song is a legit jam. Don’t @ me. #futureavengers #disneyplus #thisismyjam https://t.co/7MaOTrs9eZ",
+      "truncated": false,
+      "entities": [
+        "Object"
+      ],
+      "metadata": [
+        "Object"
+      ],
+      "source": "<a href=\"http://instagram.com\" rel=\"nofollow\">Instagram</a>",
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": [
+        "Object"
+      ],
+      "geo": null,
+      "coordinates": null,
+      "place": null,
+      "contributors": null,
+      "is_quote_status": false,
+      "retweet_count": 0,
+      "favorite_count": 0,
+      "favorited": false,
+      "retweeted": false,
+      "possibly_sensitive": false,
+      "lang": "en"
+    },
+    {
+      "created_at": "Fri Mar 06 18:57:38 +0000 2020",
+      "id": 1236003022259368000,
+      "id_str": "1236003022259367936",
+      "text": "@theweeknd killin it with this song #loveit #thisismyjam  https://t.co/IXPzgVexgK",
+      "truncated": false,
+      "entities": [
+        "Object"
+      ],
+      "metadata": [
+        "Object"
+      ],
+      "source": "<a href=\"https://mobile.twitter.com\" rel=\"nofollow\">Twitter Web App</a>",
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": 255388236,
+      "in_reply_to_user_id_str": "255388236",
+      "in_reply_to_screen_name": "theweeknd",
+      "user": [
+        "Object"
+      ],
+      "geo": null,
+      "coordinates": null,
+      "place": null,
+      "contributors": null,
+      "is_quote_status": false,
+      "retweet_count": 0,
+      "favorite_count": 0,
+      "favorited": false,
+      "retweeted": false,
+      "possibly_sensitive": false,
+      "lang": "en"
+    },
+    {
+      "created_at": "Fri Mar 06 17:16:29 +0000 2020",
+      "id": 1235977565770330000,
+      "id_str": "1235977565770330118",
+      "text": "When you come back from lunch for your afternoon session \n@MPY_Inc w/ @docspeaks &amp; upbeat music is playing, you kno… https://t.co/c18Wu3fguR",
+      "truncated": true,
+      "entities": [
+        "Object"
+      ],
+      "metadata": [
+        "Object"
+      ],
+      "source": "<a href=\"https://mobile.twitter.com\" rel=\"nofollow\">Twitter Web App</a>",
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": [
+        "Object"
+      ],
+      "geo": null,
+      "coordinates": null,
+      "place": null,
+      "contributors": null,
+      "is_quote_status": false,
+      "retweet_count": 0,
+      "favorite_count": 4,
+      "favorited": false,
+      "retweeted": false,
+      "possibly_sensitive": false,
+      "lang": "en"
+    },
+    {
+      "created_at": "Fri Mar 06 13:35:55 +0000 2020",
+      "id": 1235922055721349000,
+      "id_str": "1235922055721349120",
+      "text": "RT @NachoAguirreM: Always leave room for desserts!! #supportthebakers #VegasChefPrizefight @FoodNetwork #thisismyjam",
+      "truncated": false,
+      "entities": [
+        "Object"
+      ],
+      "metadata": [
+        "Object"
+      ],
+      "source": "<a href=\"http://twitter.com/download/iphone\" rel=\"nofollow\">Twitter for iPhone</a>",
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": [
+        "Object"
+      ],
+      "geo": null,
+      "coordinates": null,
+      "place": null,
+      "contributors": null,
+      "retweeted_status": [
+        "Object"
+      ],
+      "is_quote_status": true,
+      "quoted_status_id": 1235775428725530600,
+      "quoted_status_id_str": "1235775428725530625",
+      "retweet_count": 6,
+      "favorite_count": 0,
+      "favorited": false,
+      "retweeted": false,
+      "lang": "en"
+    },
+    {
+      "created_at": "Fri Mar 06 12:29:44 +0000 2020",
+      "id": 1235905401901678600,
+      "id_str": "1235905401901678592",
+      "text": "Chunky #thisismyjam daft video 🐔 but great beat 🎶 https://t.co/bOyPpglBgN",
+      "truncated": false,
+      "entities": [
+        "Object"
+      ],
+      "metadata": [
+        "Object"
+      ],
+      "source": "<a href=\"http://twitter.com/download/android\" rel=\"nofollow\">Twitter for Android</a>",
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": [
+        "Object"
+      ],
+      "geo": null,
+      "coordinates": null,
+      "place": null,
+      "contributors": null,
+      "is_quote_status": false,
+      "retweet_count": 0,
+      "favorite_count": 1,
+      "favorited": false,
+      "retweeted": false,
+      "possibly_sensitive": false,
+      "lang": "en"
+    },
+    {
+      "created_at": "Fri Mar 06 05:58:19 +0000 2020",
+      "id": 1235806900060647400,
+      "id_str": "1235806900060647424",
+      "text": "RT @NachoAguirreM: Always leave room for desserts!! #supportthebakers #VegasChefPrizefight @FoodNetwork #thisismyjam",
+      "truncated": false,
+      "entities": [
+        "Object"
+      ],
+      "metadata": [
+        "Object"
+      ],
+      "source": "<a href=\"http://twitter.com/download/iphone\" rel=\"nofollow\">Twitter for iPhone</a>",
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": [
+        "Object"
+      ],
+      "geo": null,
+      "coordinates": null,
+      "place": null,
+      "contributors": null,
+      "retweeted_status": [
+        "Object"
+      ],
+      "is_quote_status": true,
+      "quoted_status_id": 1235775428725530600,
+      "quoted_status_id_str": "1235775428725530625",
+      "retweet_count": 6,
+      "favorite_count": 0,
+      "favorited": false,
+      "retweeted": false,
+      "lang": "en"
+    },
+    {
+      "created_at": "Fri Mar 06 04:34:23 +0000 2020",
+      "id": 1235785774953402400,
+      "id_str": "1235785774953402368",
+      "text": "RT @NachoAguirreM: Always leave room for desserts!! #supportthebakers #VegasChefPrizefight @FoodNetwork #thisismyjam",
+      "truncated": false,
+      "entities": [
+        "Object"
+      ],
+      "metadata": [
+        "Object"
+      ],
+      "source": "<a href=\"http://twitter.com/download/iphone\" rel=\"nofollow\">Twitter for iPhone</a>",
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": [
+        "Object"
+      ],
+      "geo": null,
+      "coordinates": null,
+      "place": null,
+      "contributors": null,
+      "retweeted_status": [
+        "Object"
+      ],
+      "is_quote_status": true,
+      "quoted_status_id": 1235775428725530600,
+      "quoted_status_id_str": "1235775428725530625",
+      "retweet_count": 6,
+      "favorite_count": 0,
+      "favorited": false,
+      "retweeted": false,
+      "lang": "en"
+    },
+    {
+      "created_at": "Fri Mar 06 03:55:30 +0000 2020",
+      "id": 1235775989751349200,
+      "id_str": "1235775989751349251",
+      "text": "RT @NachoAguirreM: Always leave room for desserts!! #supportthebakers #VegasChefPrizefight @FoodNetwork #thisismyjam https://t.co/y3VhDyuvgj",
+      "truncated": false,
+      "entities": [
+        "Object"
+      ],
+      "metadata": [
+        "Object"
+      ],
+      "source": "<a href=\"https://about.twitter.com/products/tweetdeck\" rel=\"nofollow\">TweetDeck</a>",
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": [
+        "Object"
+      ],
+      "geo": null,
+      "coordinates": null,
+      "place": null,
+      "contributors": null,
+      "retweeted_status": [
+        "Object"
+      ],
+      "is_quote_status": true,
+      "quoted_status_id": 1235775428725530600,
+      "quoted_status_id_str": "1235775428725530625",
+      "retweet_count": 6,
+      "favorite_count": 0,
+      "favorited": false,
+      "retweeted": false,
+      "possibly_sensitive": false,
+      "lang": "en"
+    },
+    {
+      "created_at": "Fri Mar 06 03:55:11 +0000 2020",
+      "id": 1235775911011799000,
+      "id_str": "1235775911011799042",
+      "text": "Always leave room for desserts!! #supportthebakers #VegasChefPrizefight @FoodNetwork #thisismyjam https://t.co/y3VhDyuvgj",
+      "truncated": false,
+      "entities": [
+        "Object"
+      ],
+      "metadata": [
+        "Object"
+      ],
+      "source": "<a href=\"http://twitter.com/download/iphone\" rel=\"nofollow\">Twitter for iPhone</a>",
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": [
+        "Object"
+      ],
+      "geo": null,
+      "coordinates": null,
+      "place": [
+        "Object"
+      ],
+      "contributors": null,
+      "is_quote_status": true,
+      "quoted_status_id": 1235775428725530600,
+      "quoted_status_id_str": "1235775428725530625",
+      "quoted_status": [
+        "Object"
+      ],
+      "retweet_count": 6,
+      "favorite_count": 32,
+      "favorited": false,
+      "retweeted": false,
+      "possibly_sensitive": false,
+      "lang": "en"
+    },
+    {
+      "created_at": "Thu Mar 05 22:17:10 +0000 2020",
+      "id": 1235690845363466200,
+      "id_str": "1235690845363466242",
+      "text": "@ValiantComics @HotTopic Hot Topic + Valiant + Discount = winner!!! \n\n#ThisisMyJam !!! https://t.co/M6juMQfy3a",
+      "truncated": false,
+      "entities": [
+        "Object"
+      ],
+      "extended_entities": [
+        "Object"
+      ],
+      "metadata": [
+        "Object"
+      ],
+      "source": "<a href=\"http://twitter.com/download/iphone\" rel=\"nofollow\">Twitter for iPhone</a>",
+      "in_reply_to_status_id": 1235687869970296800,
+      "in_reply_to_status_id_str": "1235687869970296832",
+      "in_reply_to_user_id": 18951206,
+      "in_reply_to_user_id_str": "18951206",
+      "in_reply_to_screen_name": "ValiantComics",
+      "user": [
+        "Object"
+      ],
+      "geo": null,
+      "coordinates": null,
+      "place": null,
+      "contributors": null,
+      "is_quote_status": false,
+      "retweet_count": 0,
+      "favorite_count": 1,
+      "favorited": false,
+      "retweeted": false,
+      "possibly_sensitive": false,
+      "lang": "en"
+    },
+    {
+      "created_at": "Thu Mar 05 19:16:18 +0000 2020",
+      "id": 1235645331527938000,
+      "id_str": "1235645331527938048",
+      "text": "RT @Thayer: #thisismyjam #teenagesoundtrack  @WeAreAltern8's amazing E-Vapor-8. Make it loud and watch your subs go crazy 🔊 👆🎶 Ravers unite…",
+      "truncated": false,
+      "entities": [
+        "Object"
+      ],
+      "metadata": [
+        "Object"
+      ],
+      "source": "<a href=\"https://mobile.twitter.com\" rel=\"nofollow\">Twitter Web App</a>",
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": [
+        "Object"
+      ],
+      "geo": null,
+      "coordinates": null,
+      "place": null,
+      "contributors": null,
+      "retweeted_status": [
+        "Object"
+      ],
+      "is_quote_status": false,
+      "retweet_count": 4,
+      "favorite_count": 0,
+      "favorited": false,
+      "retweeted": false,
+      "possibly_sensitive": false,
+      "lang": "en"
+    },
+    {
+      "created_at": "Thu Mar 05 13:29:28 +0000 2020",
+      "id": 1235558046895464400,
+      "id_str": "1235558046895464448",
+      "text": "#thisismyjam \nhttps://t.co/lldPH1IreV",
+      "truncated": false,
+      "entities": [
+        "Object"
+      ],
+      "metadata": [
+        "Object"
+      ],
+      "source": "<a href=\"http://twitter.com/download/android\" rel=\"nofollow\">Twitter for Android</a>",
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": [
+        "Object"
+      ],
+      "geo": null,
+      "coordinates": null,
+      "place": null,
+      "contributors": null,
+      "is_quote_status": false,
+      "retweet_count": 0,
+      "favorite_count": 0,
+      "favorited": false,
+      "retweeted": false,
+      "possibly_sensitive": false,
+      "lang": "und"
+    },
+    {
+      "created_at": "Wed Mar 04 20:38:28 +0000 2020",
+      "id": 1235303621077733400,
+      "id_str": "1235303621077733376",
+      "text": "#thisismyjam \nhttps://t.co/YAC2uDAK3m",
+      "truncated": false,
+      "entities": [
+        "Object"
+      ],
+      "metadata": [
+        "Object"
+      ],
+      "source": "<a href=\"http://twitter.com/download/android\" rel=\"nofollow\">Twitter for Android</a>",
+      "in_reply_to_status_id": null,
+      "in_reply_to_status_id_str": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_user_id_str": null,
+      "in_reply_to_screen_name": null,
+      "user": [
+        "Object"
+      ],
+      "geo": null,
+      "coordinates": null,
+      "place": null,
+      "contributors": null,
+    "is_quote_status": false,
+    "retweet_count": 0,
+    "favorite_count": 0,
+    "favorited": false,
+    "retweeted": false,
+    "possibly_sensitive": false,
+    "lang": "und" } ],
+  "search_metadata":
+  { "completed_in": 0.071,
+    "max_id": 1236281999452786700,
+    "max_id_str": "1236281999452786690",
+    "next_results": "?max_id=1235303621077733375&q=%23ThisIsMyJam&include_entities=1&result_type=recent",
+    "query": "%23ThisIsMyJam",
+    "refresh_url": "?since_id=1236281999452786690&q=%23ThisIsMyJam&result_type=recent&include_entities=1",
+    "count": 15,
+    "since_id": 0,
+    "since_id_str": "0" } }
