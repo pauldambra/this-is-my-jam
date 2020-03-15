@@ -25,6 +25,7 @@ const cards = (toots: string): string => `<article class="card"><p>${toots}</p><
 const content = (toots: string): string => {
   return `        <div id="content">
           <div class="centered">
+            <h1>Most Recent Jam</h1>
              <section class="cards"> ${cards(toots)} </section>
           </div>
         </div>`

@@ -36,6 +36,10 @@ provider:
   iamRoleStatements:
     - Effect: Allow
       Action:
+        - cloudfront:CreateInvalidation
+      Resource: "*"
+    - Effect: Allow
+      Action:
         - xray:PutTraceSegments
         - xray:PutTelemetryRecords
       Resource: "*"
@@ -100,6 +104,7 @@ functions:
     environment:
       TOOT_TABLE_NAME: ${self:custom.tootTableName}
       WEB_BUCKET: ${self:custom.siteName}
+      CLOUDFRONT_DISTRIBUTION: !Ref WebAppCloudFrontDistribution
   twitter-poller:
     handler: src/poll-for-jams/twitter-poller.handle
     events:

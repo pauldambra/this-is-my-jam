@@ -46,13 +46,14 @@ var AWS = AWSXRay.captureAWS(untracedAWSSDK);
 // @ts-ignore
 var docClient = new AWS.DynamoDB.DocumentClient({ apiVersion: '2012-08-10' });
 var s3 = new AWS.S3({ apiVersion: '2006-03-01' });
+var cloudfront = new AWS.CloudFront({ apiVersion: '2019-03-26' });
 module.exports.generate = function (event) { return __awaiter(void 0, void 0, void 0, function () {
-    var Items, byDate, mostRecent, tootHTML, decodedHTML, indexHTML, uploadParams, e_1;
+    var Items, byDate, mostRecent, tootHTML, decodedHTML, indexHTML, uploadParams, invalidationParams, e_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                if (!process.env.TOOT_TABLE_NAME || !process.env.WEB_BUCKET) {
-                    console.log("must provide env variables:\n    toot table: " + process.env.TOOT_TABLE_NAME + "\n    web bucket: " + process.env.WEB_BUCKET);
+                if (!process.env.TOOT_TABLE_NAME || !process.env.WEB_BUCKET || !process.env.CLOUDFRONT_DISTRIBUTION) {
+                    console.log("must provide env variables:\n    toot table: " + process.env.TOOT_TABLE_NAME + "\n    web bucket: " + process.env.WEB_BUCKET + "\n    cloudfront distribution: " + process.env.CLOUDFRONT_DISTRIBUTION);
                     return [2 /*return*/, {
                             statusCode: 400
                         }];
@@ -72,7 +73,7 @@ module.exports.generate = function (event) { return __awaiter(void 0, void 0, vo
                 indexHTML = templates.htmlPage(decodedHTML);
                 _a.label = 3;
             case 3:
-                _a.trys.push([3, 5, , 6]);
+                _a.trys.push([3, 6, , 7]);
                 uploadParams = {
                     Bucket: process.env.WEB_BUCKET,
                     Key: 'index.html',
@@ -82,11 +83,26 @@ module.exports.generate = function (event) { return __awaiter(void 0, void 0, vo
                 return [4 /*yield*/, s3.putObject(uploadParams).promise()];
             case 4:
                 _a.sent();
-                return [3 /*break*/, 6];
+                invalidationParams = {
+                    DistributionId: process.env.CLOUDFRONT_DISTRIBUTION,
+                    InvalidationBatch: {
+                        CallerReference: "index-invalidation-" + new Date().toISOString(),
+                        Paths: {
+                            Quantity: 1,
+                            Items: [
+                                '/index.html'
+                            ]
+                        }
+                    }
+                };
+                return [4 /*yield*/, cloudfront.createInvalidation(invalidationParams).promise()];
             case 5:
+                _a.sent();
+                return [3 /*break*/, 7];
+            case 6:
                 e_1 = _a.sent();
                 throw new Error("could not write to s3 bucket (" + process.env.WEB_BUCKET + "): " + JSON.stringify(e_1));
-            case 6: return [2 /*return*/, {
+            case 7: return [2 /*return*/, {
                     statusCode: 200,
                     body: indexHTML,
                     headers: {

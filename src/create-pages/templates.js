@@ -11,7 +11,7 @@ var header = function () {
 };
 var cards = function (toots) { return "<article class=\"card\"><p>" + toots + "</p></article>"; };
 var content = function (toots) {
-    return "        <div id=\"content\">\n          <div class=\"centered\">\n             <section class=\"cards\"> " + cards(toots) + " </section>\n          </div>\n        </div>";
+    return "        <div id=\"content\">\n          <div class=\"centered\">\n            <h1>Most Recent Jam</h1>\n             <section class=\"cards\"> " + cards(toots) + " </section>\n          </div>\n        </div>";
 };
 exports.htmlPage = function (toots) {
     return "\n    <!DOCTYPE html>\n    <html>\n    " + head() + "\n      <body>\n        <div id=\"wrapper\">\n          " + header() + "\n          " + content(toots) + "\n          " + footer() + "\n        </div>\n      </body>\n    </html>\n  ";
