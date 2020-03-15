@@ -101,6 +101,10 @@ functions:
       - http:
           path: unsafe-generate
           method: get
+      - stream:
+          type: dynamodb
+          arn:
+            Fn::GetAtt: [TootsTable, StreamArn]
     environment:
       TOOT_TABLE_NAME: ${self:custom.tootTableName}
       WEB_BUCKET: ${self:custom.siteName}
