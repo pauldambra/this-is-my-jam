@@ -9,14 +9,7 @@ var footer = function () {
 var header = function () {
     return "<header>\n          <h1>\n            This is our Jams\n          </h1>\n      </header>";
 };
-var cards = function (toots) {
-    return "<article class=\"card\">\n                       <p>" + JSON.stringify(toots, function (key, value) {
-        return typeof value === 'bigint'
-            ? value.toString()
-            : value;
-    } // return everything else unchanged
-    ) + "</p>\n                    </article>\n     \n        <article class=\"card\">\n                       <p>content for card two</p>\n                </article>\n     \n    <article class=\"card\">\n                      <p>content for card three</p>\n                </article>\n     \n    <article class=\"card\">\n                       <p>content for card four</p>\n                </article>  ";
-};
+var cards = function (toots) { return "<article class=\"card\"><p>" + toots + "</p></article>"; };
 var content = function (toots) {
     return "        <div id=\"content\">\n          <div class=\"centered\">\n             <section class=\"cards\"> " + cards(toots) + " </section>\n          </div>\n        </div>";
 };

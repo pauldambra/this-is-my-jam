@@ -1,14 +1,9 @@
-import * as untracedHttps from 'https'
-
+import { TwitterTokenResponse } from './twitter-types'
 import { TwitterAccessKeys } from '../poll-for-jams/twitter-poller'
 
+import * as untracedHttps from 'https'
 import * as AWSXRay from 'aws-xray-sdk'
 const https = AWSXRay.captureHTTPs(untracedHttps, false)
-
-export interface TwitterTokenResponse {
-    token_type: 'bearer';
-    access_token: string;
-}
 
 const buildRequest = (twitterAccess: TwitterAccessKeys): [string, object] => {
   const k = encodeURIComponent(twitterAccess.key)

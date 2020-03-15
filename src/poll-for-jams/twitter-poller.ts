@@ -1,11 +1,10 @@
-import { getBearerToken, TwitterTokenResponse } from '../twitter-api/get-twitter-bearer-token'
+import { getBearerToken } from '../twitter-api/get-twitter-bearer-token'
 import { searchTwitter } from '../twitter-api/search-twitter'
-
+import { TwitterTokenResponse } from '../twitter-api/twitter-types'
 import { getLastTootStored, setLastTootStored } from './last-stored-toot'
 
 import * as AWSXRay from 'aws-xray-sdk'
 import * as untracedAWSSDK from 'aws-sdk'
-
 const AWS = AWSXRay.captureAWS(untracedAWSSDK)
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-ignore

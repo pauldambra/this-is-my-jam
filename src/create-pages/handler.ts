@@ -2,7 +2,9 @@ import * as templates from './templates'
 
 import * as AWSXRay from 'aws-xray-sdk'
 import * as untracedAWSSDK from 'aws-sdk'
-import { sortToots } from '../poll-for-jams/last-stored-toot'
+import { sortToots, StoredToot } from '../poll-for-jams/last-stored-toot'
+import { oEmbedHTML } from './get-twitter-oembed'
+import { Toot } from '../twitter-api/twitter-types'
 
 const AWS = AWSXRay.captureAWS(untracedAWSSDK)
 
@@ -25,9 +27,12 @@ module.exports.generate = async (event): Promise<object> => {
     TableName: process.env.TOOT_TABLE_NAME
   }).promise()
 
-  const byDate = sortToots(Items)
-
-  const indexHTML = templates.htmlPage(byDate[0])
+  const byDate: Array<StoredToot> = sortToots<StoredToot>(Items)
+  const mostRecent: StoredToot = byDate[0]
+  const tootHTML = await oEmbedHTML(mostRecent.user, mostRecent.id)
+  const decodedHTML = tootHTML.html.replace(/\\"/g, '"').replace(/\n/g, '')
+  console.log({ from: tootHTML.html, to: decodedHTML }, 'change in embed html')
+  const indexHTML = templates.htmlPage(decodedHTML)
 
   try {
     const uploadParams = {

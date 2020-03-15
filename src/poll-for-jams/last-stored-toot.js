@@ -65,12 +65,15 @@ function getLastTootStored(tableName, docClient, lastTootId) {
 }
 exports.getLastTootStored = getLastTootStored;
 var sortDescending = function (a, b) { return (a.timestamp > b.timestamp) ? -1 : ((a.timestamp < b.timestamp) ? 1 : 0); };
-exports.sortToots = function (items) { return items.sort(sortDescending); };
+function sortToots(items) {
+    return items.sort(sortDescending);
+}
+exports.sortToots = sortToots;
 function setLastTootStored(tableName, docClient, lastTootId, items) {
     return __awaiter(this, void 0, void 0, function () {
         var latest, params;
         return __generator(this, function (_a) {
-            latest = exports.sortToots(items)[0];
+            latest = sortToots(items)[0];
             if (latest) {
                 params = {
                     TableName: tableName,
@@ -86,4 +89,3 @@ function setLastTootStored(tableName, docClient, lastTootId, items) {
     });
 }
 exports.setLastTootStored = setLastTootStored;
-return docClient.put(params).promise();

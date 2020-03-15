@@ -20,29 +20,9 @@ const header = (): string => {
       </header>`
 }
 
-const cards = (toots: any): string => {
-  return `<article class="card">
-                       <p>${JSON.stringify(toots, (key, value) =>
-    typeof value === 'bigint'
-      ? value.toString()
-      : value // return everything else unchanged
-  )}</p>
-                    </article>
-     
-        <article class="card">
-                       <p>content for card two</p>
-                </article>
-     
-    <article class="card">
-                      <p>content for card three</p>
-                </article>
-     
-    <article class="card">
-                       <p>content for card four</p>
-                </article>  `
-}
+const cards = (toots: string): string => `<article class="card"><p>${toots}</p></article>`
 
-const content = (toots: any): string => {
+const content = (toots: string): string => {
   return `        <div id="content">
           <div class="centered">
              <section class="cards"> ${cards(toots)} </section>
@@ -50,7 +30,7 @@ const content = (toots: any): string => {
         </div>`
 }
 
-export const htmlPage = (toots: any): string => {
+export const htmlPage = (toots: string): string => {
   return `
     <!DOCTYPE html>
     <html>

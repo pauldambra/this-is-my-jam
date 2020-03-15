@@ -40,13 +40,14 @@ var templates = require("./templates");
 var AWSXRay = require("aws-xray-sdk");
 var untracedAWSSDK = require("aws-sdk");
 var last_stored_toot_1 = require("../poll-for-jams/last-stored-toot");
+var get_twitter_oembed_1 = require("./get-twitter-oembed");
 var AWS = AWSXRay.captureAWS(untracedAWSSDK);
 // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
 // @ts-ignore
 var docClient = new AWS.DynamoDB.DocumentClient({ apiVersion: '2012-08-10' });
 var s3 = new AWS.S3({ apiVersion: '2006-03-01' });
 module.exports.generate = function (event) { return __awaiter(void 0, void 0, void 0, function () {
-    var Items, byDate, indexHTML, uploadParams, e_1;
+    var Items, byDate, mostRecent, tootHTML, decodedHTML, indexHTML, uploadParams, e_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -62,10 +63,16 @@ module.exports.generate = function (event) { return __awaiter(void 0, void 0, vo
             case 1:
                 Items = (_a.sent()).Items;
                 byDate = last_stored_toot_1.sortToots(Items);
-                indexHTML = templates.htmlPage(byDate[0]);
-                _a.label = 2;
+                mostRecent = byDate[0];
+                return [4 /*yield*/, get_twitter_oembed_1.oEmbedHTML(mostRecent.user, mostRecent.id)];
             case 2:
-                _a.trys.push([2, 4, , 5]);
+                tootHTML = _a.sent();
+                decodedHTML = tootHTML.html.replace(/\\"/g, '"').replace(/\n/g, '');
+                console.log({ from: tootHTML.html, to: decodedHTML }, 'change in embed html');
+                indexHTML = templates.htmlPage(decodedHTML);
+                _a.label = 3;
+            case 3:
+                _a.trys.push([3, 5, , 6]);
                 uploadParams = {
                     Bucket: process.env.WEB_BUCKET,
                     Key: 'index.html',
@@ -73,13 +80,13 @@ module.exports.generate = function (event) { return __awaiter(void 0, void 0, vo
                     Body: Buffer.from(indexHTML, 'binary')
                 };
                 return [4 /*yield*/, s3.putObject(uploadParams).promise()];
-            case 3:
-                _a.sent();
-                return [3 /*break*/, 5];
             case 4:
+                _a.sent();
+                return [3 /*break*/, 6];
+            case 5:
                 e_1 = _a.sent();
                 throw new Error("could not write to s3 bucket (" + process.env.WEB_BUCKET + "): " + JSON.stringify(e_1));
-            case 5: return [2 /*return*/, {
+            case 6: return [2 /*return*/, {
                     statusCode: 200,
                     body: indexHTML,
                     headers: {
