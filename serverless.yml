@@ -28,7 +28,8 @@ custom:
 provider:
   name: aws
   runtime: nodejs12.x
-  memorySize: 192
+  memorySize: 256
+  timeout: 45
   logRetentionInDays: 1
   tracing:
     apiGateway: true

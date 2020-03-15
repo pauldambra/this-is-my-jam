@@ -47,10 +47,57 @@ var AWS = AWSXRay.captureAWS(untracedAWSSDK);
 var docClient = new AWS.DynamoDB.DocumentClient({ apiVersion: '2012-08-10' });
 var s3 = new AWS.S3({ apiVersion: '2006-03-01' });
 var cloudfront = new AWS.CloudFront({ apiVersion: '2019-03-26' });
-module.exports.generate = function (event) { return __awaiter(void 0, void 0, void 0, function () {
-    var Items, byDate, mostRecent, tootHTML, decodedHTML, indexHTML, uploadParams, invalidationParams, e_1;
+var updateHtmlFile = function (sortedToots, fileName) { return __awaiter(void 0, void 0, void 0, function () {
+    var mostRecent, tootHTML, decodedHTML, indexHTML, uploadParams, invalidationParams, e_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
+            case 0:
+                mostRecent = sortedToots[0];
+                return [4 /*yield*/, get_twitter_oembed_1.oEmbedHTML(mostRecent.user, mostRecent.id)];
+            case 1:
+                tootHTML = _a.sent();
+                decodedHTML = tootHTML.html.replace(/\\"/g, '"').replace(/\n/g, '');
+                console.log({ from: tootHTML.html, to: decodedHTML }, 'change in embed html');
+                indexHTML = templates.htmlPage(decodedHTML);
+                _a.label = 2;
+            case 2:
+                _a.trys.push([2, 5, , 6]);
+                uploadParams = {
+                    Bucket: process.env.WEB_BUCKET,
+                    Key: fileName,
+                    ContentType: 'binary',
+                    Body: Buffer.from(indexHTML, 'binary')
+                };
+                return [4 /*yield*/, s3.putObject(uploadParams).promise()];
+            case 3:
+                _a.sent();
+                invalidationParams = {
+                    DistributionId: process.env.CLOUDFRONT_DISTRIBUTION,
+                    InvalidationBatch: {
+                        CallerReference: "index-invalidation-" + new Date().toISOString(),
+                        Paths: {
+                            Quantity: 1,
+                            Items: [
+                                "/" + fileName
+                            ]
+                        }
+                    }
+                };
+                return [4 /*yield*/, cloudfront.createInvalidation(invalidationParams).promise()];
+            case 4:
+                _a.sent();
+                return [3 /*break*/, 6];
+            case 5:
+                e_1 = _a.sent();
+                throw new Error("could not write to s3 bucket (" + process.env.WEB_BUCKET + "): " + JSON.stringify(e_1));
+            case 6: return [2 /*return*/];
+        }
+    });
+}); };
+module.exports.generate = function (event) { return __awaiter(void 0, void 0, void 0, function () {
+    var Items, byDate, byUser, _i, _a, _b, key, value;
+    return __generator(this, function (_c) {
+        switch (_c.label) {
             case 0:
                 if (!process.env.TOOT_TABLE_NAME || !process.env.WEB_BUCKET || !process.env.CLOUDFRONT_DISTRIBUTION) {
                     console.log("must provide env variables:\n    toot table: " + process.env.TOOT_TABLE_NAME + "\n    web bucket: " + process.env.WEB_BUCKET + "\n    cloudfront distribution: " + process.env.CLOUDFRONT_DISTRIBUTION);
@@ -62,52 +109,34 @@ module.exports.generate = function (event) { return __awaiter(void 0, void 0, vo
                         TableName: process.env.TOOT_TABLE_NAME
                     }).promise()];
             case 1:
-                Items = (_a.sent()).Items;
+                Items = (_c.sent()).Items;
                 byDate = last_stored_toot_1.sortToots(Items);
-                mostRecent = byDate[0];
-                return [4 /*yield*/, get_twitter_oembed_1.oEmbedHTML(mostRecent.user, mostRecent.id)];
+                return [4 /*yield*/, updateHtmlFile(byDate, 'index.html')];
             case 2:
-                tootHTML = _a.sent();
-                decodedHTML = tootHTML.html.replace(/\\"/g, '"').replace(/\n/g, '');
-                console.log({ from: tootHTML.html, to: decodedHTML }, 'change in embed html');
-                indexHTML = templates.htmlPage(decodedHTML);
-                _a.label = 3;
+                _c.sent();
+                byUser = byDate.reduce(function (acc, curr) {
+                    if (!acc[curr.user]) {
+                        acc[curr.user] = [];
+                    }
+                    acc[curr.user].push(curr);
+                    return acc;
+                }, {});
+                _i = 0, _a = Object.entries(byUser);
+                _c.label = 3;
             case 3:
-                _a.trys.push([3, 6, , 7]);
-                uploadParams = {
-                    Bucket: process.env.WEB_BUCKET,
-                    Key: 'index.html',
-                    ContentType: 'binary',
-                    Body: Buffer.from(indexHTML, 'binary')
-                };
-                return [4 /*yield*/, s3.putObject(uploadParams).promise()];
+                if (!(_i < _a.length)) return [3 /*break*/, 6];
+                _b = _a[_i], key = _b[0], value = _b[1];
+                console.log(key + ": " + value);
+                if (!(value instanceof Array && value.length > 0)) return [3 /*break*/, 5];
+                return [4 /*yield*/, updateHtmlFile(value, key + ".html")];
             case 4:
-                _a.sent();
-                invalidationParams = {
-                    DistributionId: process.env.CLOUDFRONT_DISTRIBUTION,
-                    InvalidationBatch: {
-                        CallerReference: "index-invalidation-" + new Date().toISOString(),
-                        Paths: {
-                            Quantity: 1,
-                            Items: [
-                                '/index.html'
-                            ]
-                        }
-                    }
-                };
-                return [4 /*yield*/, cloudfront.createInvalidation(invalidationParams).promise()];
+                _c.sent();
+                _c.label = 5;
             case 5:
-                _a.sent();
-                return [3 /*break*/, 7];
-            case 6:
-                e_1 = _a.sent();
-                throw new Error("could not write to s3 bucket (" + process.env.WEB_BUCKET + "): " + JSON.stringify(e_1));
-            case 7: return [2 /*return*/, {
-                    statusCode: 200,
-                    body: indexHTML,
-                    headers: {
-                        'content-type': 'text/html'
-                    }
+                _i++;
+                return [3 /*break*/, 3];
+            case 6: return [2 /*return*/, {
+                    statusCode: 200
                 }];
         }
     });
