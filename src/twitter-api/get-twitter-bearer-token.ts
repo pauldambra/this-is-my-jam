@@ -1,6 +1,6 @@
 import * as untracedHttps from 'https'
 
-import { TwitterAccessKeys } from '../twitter-poller'
+import { TwitterAccessKeys } from '../poll-for-jams/twitter-poller'
 
 import * as AWSXRay from 'aws-xray-sdk'
 const https = AWSXRay.captureHTTPs(untracedHttps, false)

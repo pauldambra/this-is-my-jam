@@ -5,10 +5,15 @@ import { TwitterTokenResponse } from './get-twitter-bearer-token'
 import * as AWSXRay from 'aws-xray-sdk'
 const https = AWSXRay.captureHTTPs(untracedHttps, false)
 
+export interface Tooter {
+  screen_name: string;
+}
+
 // full schema at https://developer.twitter.com/en/docs/tweets/data-dictionary/overview/intro-to-tweet-json
 export interface Toot {
+  id_str: string;
+  user: Tooter;
   'created_at': string;
-  'id': number;
   'text': string;
   'truncated': boolean;
 }
@@ -18,7 +23,7 @@ export interface TwitterSearchResults {
   search_metadata: object;
 }
 
-const buildSearchRequest = (bearerToken: TwitterTokenResponse, sinceId: number): object => {
+const buildSearchRequest = (bearerToken: TwitterTokenResponse, sinceId: string | undefined): object => {
   const authHeader = `Bearer ${bearerToken.access_token}`
 
   const sinceParam = sinceId ? `&since_id=${sinceId}` : ''
@@ -36,7 +41,7 @@ const buildSearchRequest = (bearerToken: TwitterTokenResponse, sinceId: number):
   }
 }
 
-export const searchTwitter = (bearerToken: TwitterTokenResponse, sinceId: number): Promise<TwitterSearchResults> => {
+export const searchTwitter = (bearerToken: TwitterTokenResponse, sinceId: string | undefined): Promise<TwitterSearchResults> => {
   const options = buildSearchRequest(bearerToken, sinceId)
 
   return new Promise<TwitterSearchResults>((resolve, reject) => {

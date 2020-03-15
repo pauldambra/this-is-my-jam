@@ -1,11 +1,5 @@
-
-interface LastEvaluatedKey {
-  id: number;
-  timestamp: string;
-}
-
 interface DynamoSortable {
-  id: number;
+  id: string;
   timestamp: string;
 }
 
@@ -28,7 +22,7 @@ interface LastTootResults {
   ScannedCount: 0 | 1;
 }
 
-export async function getLastTootStored (tableName: string, docClient: Queryer, lastTootId: string): Promise<number | undefined> {
+export async function getLastTootStored (tableName: string, docClient: Queryer, lastTootId: string): Promise<string | undefined> {
   const params = {
     TableName: tableName,
     Limit: 1,
@@ -41,7 +35,7 @@ export async function getLastTootStored (tableName: string, docClient: Queryer, 
   const results: LastTootResults = await docClient.query(params).promise()
   console.log(results, 'query results')
 
-  let sinceId: number | undefined
+  let sinceId: string | undefined
   if (results && results.Items && results.Items[0]) {
     sinceId = results.Items[0].lastToot.id
   }
@@ -49,10 +43,12 @@ export async function getLastTootStored (tableName: string, docClient: Queryer, 
   return sinceId
 }
 
-const sortDescending = (a, b) => (a.timestamp > b.timestamp) ? -1 : ((a.timestamp < b.timestamp) ? 1 : 0)
+const sortDescending = (a, b): 0 | 1 | -1 => (a.timestamp > b.timestamp) ? -1 : ((a.timestamp < b.timestamp) ? 1 : 0)
+
+export const sortToots = (items: Array<DynamoSortable>) => items.sort(sortDescending)
 
 export async function setLastTootStored (tableName: string, docClient: Storer, lastTootId: string, items: Array<DynamoSortable>): Promise<void> {
-  const latest = items.sort(sortDescending)[0]
+  const latest = sortToots(items)[0]
   if (latest) {
     const params = {
       TableName: tableName,

@@ -36,11 +36,11 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var get_twitter_bearer_token_1 = require("./twitter-api/get-twitter-bearer-token");
-var search_twitter_1 = require("./twitter-api/search-twitter");
+var get_twitter_bearer_token_1 = require("../twitter-api/get-twitter-bearer-token");
+var search_twitter_1 = require("../twitter-api/search-twitter");
+var last_stored_toot_1 = require("./last-stored-toot");
 var AWSXRay = require("aws-xray-sdk");
 var untracedAWSSDK = require("aws-sdk");
-var last_stored_toot_1 = require("./last-stored-toot");
 var AWS = AWSXRay.captureAWS(untracedAWSSDK);
 // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
 // @ts-ignore
@@ -50,7 +50,7 @@ var getTwitterAccessKey = function () { return process.env.TWITTER_ACCESS ? JSON
 var bearerToken;
 var twitterAccess;
 exports.handle = function () { return __awaiter(void 0, void 0, void 0, function () {
-    var _a, sinceId, searchResults, toSave, writes, e_1;
+    var _a, lastTootTableName, lastTootId, sinceId, searchResults, toSave, writes, e_1;
     return __generator(this, function (_b) {
         switch (_b.label) {
             case 0:
@@ -63,7 +63,13 @@ exports.handle = function () { return __awaiter(void 0, void 0, void 0, function
                 _b.label = 2;
             case 2:
                 bearerToken = _a;
-                return [4 /*yield*/, last_stored_toot_1.getLastTootStored(process.env.LAST_TOOT_TABLE_NAME, docClient, process.env.LAST_TOOT_ID)];
+                if (!process.env.LAST_TOOT_TABLE_NAME || !process.env.LAST_TOOT_ID || !process.env.TOOT_TABLE_NAME) {
+                    console.log("must receive necessary environment variables. \n    last toot table name: " + process.env.LAST_TOOT_TABLE_NAME + " and\n    toot id: " + process.env.LAST_TOOT_ID + " and\n    toot table: " + process.env.TOOT_TABLE_NAME);
+                    return [2 /*return*/];
+                }
+                lastTootTableName = process.env.LAST_TOOT_TABLE_NAME;
+                lastTootId = process.env.LAST_TOOT_ID;
+                return [4 /*yield*/, last_stored_toot_1.getLastTootStored(lastTootTableName, docClient, lastTootId)];
             case 3:
                 sinceId = _b.sent();
                 return [4 /*yield*/, search_twitter_1.searchTwitter(bearerToken, sinceId)];
@@ -73,9 +79,12 @@ exports.handle = function () { return __awaiter(void 0, void 0, void 0, function
                 _b.label = 5;
             case 5:
                 _b.trys.push([5, 8, , 9]);
-                toSave = searchResults.statuses.map(function (s) {
+                toSave = searchResults.statuses
+                    .map(function (s) {
+                    console.log(s.user, 'user');
                     return {
-                        id: s.id,
+                        id: s.id_str,
+                        user: s.user.screen_name,
                         timestamp: new Date(s.created_at).toISOString(),
                         toot: JSON.stringify(s)
                     };

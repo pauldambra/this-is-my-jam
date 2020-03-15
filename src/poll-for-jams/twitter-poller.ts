@@ -1,9 +1,10 @@
-import { getBearerToken, TwitterTokenResponse } from './twitter-api/get-twitter-bearer-token'
-import { searchTwitter, Toot } from './twitter-api/search-twitter'
+import { getBearerToken, TwitterTokenResponse } from '../twitter-api/get-twitter-bearer-token'
+import { searchTwitter } from '../twitter-api/search-twitter'
+
+import { getLastTootStored, setLastTootStored } from './last-stored-toot'
 
 import * as AWSXRay from 'aws-xray-sdk'
 import * as untracedAWSSDK from 'aws-sdk'
-import { getLastTootStored, setLastTootStored } from './last-stored-toot'
 
 const AWS = AWSXRay.captureAWS(untracedAWSSDK)
 
@@ -26,22 +27,36 @@ export const handle = async (): Promise<void> => {
   twitterAccess = twitterAccess || getTwitterAccessKey()
   bearerToken = bearerToken || await getBearerToken(twitterAccess)
 
-  const sinceId: number | undefined = await getLastTootStored(
-    process.env.LAST_TOOT_TABLE_NAME,
+  if (!process.env.LAST_TOOT_TABLE_NAME || !process.env.LAST_TOOT_ID || !process.env.TOOT_TABLE_NAME) {
+    console.log(`must receive necessary environment variables. 
+    last toot table name: ${process.env.LAST_TOOT_TABLE_NAME} and
+    toot id: ${process.env.LAST_TOOT_ID} and
+    toot table: ${process.env.TOOT_TABLE_NAME}`)
+    return
+  }
+
+  const lastTootTableName: string = process.env.LAST_TOOT_TABLE_NAME
+  const lastTootId: string = process.env.LAST_TOOT_ID
+
+  const sinceId: string | undefined = await getLastTootStored(
+    lastTootTableName,
     docClient,
-    process.env.LAST_TOOT_ID)
+    lastTootId)
 
   const searchResults = await searchTwitter(bearerToken, sinceId)
   console.log(`loaded ${searchResults.statuses.length} toots`)
 
   try {
-    const toSave = searchResults.statuses.map(s => {
-      return {
-        id: s.id,
-        timestamp: new Date(s.created_at).toISOString(),
-        toot: JSON.stringify(s)
-      }
-    })
+    const toSave = searchResults.statuses
+      .map(s => {
+        console.log(s.user, 'user')
+        return {
+          id: s.id_str,
+          user: s.user.screen_name,
+          timestamp: new Date(s.created_at).toISOString(),
+          toot: JSON.stringify(s)
+        }
+      })
 
     const writes = toSave
       .map(async ts => {

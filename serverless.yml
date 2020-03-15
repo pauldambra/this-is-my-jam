@@ -23,11 +23,12 @@ custom:
   # Set the table name here so we can use it while testing locally
   tootTableName: toots-${self:custom.stage}
   lastTootTableName: last-toot-saved-${self:custom.stage}
+  siteName: this-is-our-jam-co-uk
 
 provider:
   name: aws
   runtime: nodejs12.x
-  memorySize: 512
+  memorySize: 192
   logRetentionInDays: 1
   tracing:
     apiGateway: true
@@ -51,6 +52,11 @@ provider:
         - dynamodb:PutItem
       Resource:
         Fn::GetAtt: [ LastTootsTable, Arn ]
+    - Effect: "Allow"
+      Action:
+        - s3:PutObject
+        - s3:PutObjectAcl
+      Resource: "arn:aws:s3:::${self:custom.siteName}/*"
 # you can overwrite defaults here
 #  stage: dev
   region: eu-west-1
@@ -86,13 +92,16 @@ provider:
 
 functions:
   hello:
-    handler: src/handler.hello
+    handler: src/create-pages/handler.generate
     events:
       - http:
-          path: proof
+          path: unsafe-generate
           method: get
+    environment:
+      TOOT_TABLE_NAME: ${self:custom.tootTableName}
+      WEB_BUCKET: ${self:custom.siteName}
   twitter-poller:
-    handler: src/twitter-poller.handle
+    handler: src/poll-for-jams/twitter-poller.handle
     events:
       - schedule: rate(2 minutes)
     environment:
@@ -145,7 +154,7 @@ resources:
         TableName: ${self:custom.tootTableName}
         AttributeDefinitions:
           - AttributeName: id
-            AttributeType: N
+            AttributeType: S
           - AttributeName: timestamp
             AttributeType: S
         KeySchema:
@@ -156,6 +165,96 @@ resources:
         BillingMode: PAY_PER_REQUEST
         StreamSpecification:
           StreamViewType: NEW_IMAGE
+    StaticSite:
+      Type: AWS::S3::Bucket
+      Properties:
+        AccessControl: PublicRead
+        BucketName: ${self:custom.siteName}
+        WebsiteConfiguration:
+          IndexDocument: index.html
+    StaticSiteBucketPolicy:
+      Type: AWS::S3::BucketPolicy
+      Properties:
+        Bucket: !Ref StaticSite
+        PolicyDocument:
+          Statement:
+            - Effect: Allow
+              Action:
+                - s3:GetObject
+              Resource:
+                Fn::Join:
+                  - /
+                  - - Fn::GetAtt:
+                        - StaticSite
+                        - Arn
+                    - '*'
+              Principal:
+                CanonicalUser:
+                  Fn::GetAtt:
+                    - StaticSiteOriginAccessIdentity
+                    - S3CanonicalUserId
+    StaticSiteOriginAccessIdentity:
+      Type: AWS::CloudFront::CloudFrontOriginAccessIdentity
+      Properties:
+        CloudFrontOriginAccessIdentityConfig:
+          Comment: Origin Access Identity to Access Website Bucket
+    ## Specifying the CloudFront Distribution to server your Web Application
+    WebAppCloudFrontDistribution:
+      Type: AWS::CloudFront::Distribution
+      DependsOn:
+        - StaticSite
+        - StaticSiteOriginAccessIdentity
+      Properties:
+        DistributionConfig:
+          Origins:
+            - DomainName:
+                Fn::GetAtt:
+                  - StaticSite
+                  - DomainName
+              Id: StaticSiteOrigin
+              S3OriginConfig:
+                OriginAccessIdentity:
+                  Fn::Join:
+                    - /
+                    - - origin-access-identity
+                      - cloudfront
+                      - !Ref StaticSiteOriginAccessIdentity
+              ## In case you want to restrict the bucket access use S3OriginConfig and remove CustomOriginConfig
+              # S3OriginConfig:
+              #   OriginAccessIdentity: origin-access-identity/cloudfront/E127EXAMPLE51Z
+          Enabled: 'true'
+          ## Uncomment the following section in case you are using a custom domain
+          # Aliases:
+          # - mysite.example.com
+          DefaultRootObject: index.html
+          ## Since the Single Page App is taking care of the routing we need to make sure ever path is served with index.html
+          ## The only exception are files that actually exist e.h. app.js, reset.css
+          CustomErrorResponses:
+            - ErrorCode: 404
+              ResponseCode: 200
+              ResponsePagePath: /index.html
+          DefaultCacheBehavior:
+            AllowedMethods:
+              - GET
+              - HEAD
+              - OPTIONS
+            ## The origin id defined above
+            TargetOriginId: StaticSiteOrigin
+            ## Defining if and how the QueryString and Cookies are forwarded to the origin which in this case is S3
+            ForwardedValues:
+              QueryString: 'false'
+              Cookies:
+                Forward: none
+            ## The protocol that users can use to access the files in the origin. To allow HTTP use `allow-all`
+            ViewerProtocolPolicy: redirect-to-https
+          ## The certificate to use when viewers use HTTPS to request objects.
+          ViewerCertificate:
+            CloudFrontDefaultCertificate: 'true'
+          ## Uncomment the following section in case you want to enable logging for CloudFront requests
+#          Logging:
+#            IncludeCookies: 'false'
+#            Bucket: this-is-my-jam-logs.s3.amazonaws.com
+#            Prefix: this-is-our-jam-cf
 # you can add CloudFormation resource templates here
 #resources:
 #  Resources:
@@ -163,7 +262,8 @@ resources:
 #      Type: AWS::S3::Bucket
 #      Properties:
 #        BucketName: my-new-bucket
-#  Outputs:
-#     NewOutput:
-#       Description: "Description for the output"
-#       Value: "Some output value"
+  ## In order to print out the hosted domain via `serverless info` we need to define the DomainName output for CloudFormation
+  Outputs:
+    WebAppCloudFrontDistributionOutput:
+      Value:
+        'Fn::GetAtt': [ WebAppCloudFrontDistribution, DomainName ]
