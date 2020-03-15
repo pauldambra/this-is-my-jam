@@ -47,6 +47,8 @@ export const handle = async (): Promise<void> => {
 
   try {
     const toSave = searchResults.statuses
+      .filter(s => s.entities.urls.length > 0)
+      .filter(s => s.entities.hashtags.some(ht => ht.text.toLowerCase() === 'thisismyjam'))
       .map(s => {
         console.log(s.user, 'user')
         return {

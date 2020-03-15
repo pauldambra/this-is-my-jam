@@ -80,6 +80,8 @@ exports.handle = function () { return __awaiter(void 0, void 0, void 0, function
             case 5:
                 _b.trys.push([5, 8, , 9]);
                 toSave = searchResults.statuses
+                    .filter(function (s) { return s.entities.urls.length > 0; })
+                    .filter(function (s) { return s.entities.hashtags.some(function (ht) { return ht.text.toLowerCase() === 'thisismyjam'; }); })
                     .map(function (s) {
                     console.log(s.user, 'user');
                     return {

@@ -13,6 +13,18 @@ export interface Tooter {
   screen_name: string;
 }
 
+interface CanHaveURLs {
+  urls: Array<object>;
+}
+
+interface HashTag {
+  text: string;
+}
+
+interface CanHaveHashTags {
+  hashtags: Array<HashTag>;
+}
+
 // full schema at https://developer.twitter.com/en/docs/tweets/data-dictionary/overview/intro-to-tweet-json
 export interface Toot {
   id_str: string;
@@ -20,6 +32,7 @@ export interface Toot {
   'created_at': string;
   'text': string;
   'truncated': boolean;
+  entities: CanHaveURLs & CanHaveHashTags;
 }
 
 export interface TwitterSearchResults {
